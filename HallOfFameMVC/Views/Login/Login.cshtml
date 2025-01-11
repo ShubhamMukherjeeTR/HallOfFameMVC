@@ -18,6 +18,10 @@
         width: 50%;
     }
 </style>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
 
 <form method="post" action="@Url.Action("LoginExistingUser", "Login")">
     <div class="mb-3">
@@ -33,7 +37,7 @@
 
 <div class="mb-3"></div>
 <label for="exampleFormControlTextarea1" class="form-label">Don't have an account?</label>
-<a class="icon-link icon-link-hover" href="#">
+<a class="icon-link icon-link-hover" href="@Url.Action("CreateNewUser", "Login")">
     Create a New Account
 </a>
 
