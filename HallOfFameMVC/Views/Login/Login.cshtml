@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+@using HallOfFameMVC.Controllers
+<div class="mb-3"></div>
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <span class="navbar-brand m-auto h1">Welcome to Hall Of Fame Rewards Recognition - Thomson Reuters</span>
+    </div>
+</nav>
+
+<img src="https://images.pexels.com/photos/6532370/pexels-photo-6532370.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="HallOfFameMVC Logo" class="center" />
+<style>
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+</style>
+
+<form method="post" action="@Url.Action("LoginExistingUser", "Login")">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username or Email</label>
+        <input type="text" class="form-control" id="username" name="username" />
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" id="password" class="form-control" name="password" aria-describedby="passwordHelpBlock">
+    </div>
+    <button type="submit" class="btn btn-warning">Submit</button>
+</form>
+
+<div class="mb-3"></div>
+<label for="exampleFormControlTextarea1" class="form-label">Don't have an account?</label>
+<a class="icon-link icon-link-hover" href="#">
+    Create a New Account
+</a>
+
+@if (ViewData["Message"] != null)
+{
+    <div class="alert alert-danger">@ViewData["Message"]</div>
+}

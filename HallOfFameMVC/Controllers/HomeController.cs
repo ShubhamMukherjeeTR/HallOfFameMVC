@@ -1,5 +1,8 @@
+using HallOfFameMVC.Data;
 using HallOfFameMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.Data;
 using System.Diagnostics;
 
 namespace HallOfFameMVC.Controllers
@@ -27,6 +30,20 @@ namespace HallOfFameMVC.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        
+        public async Task<IActionResult> GetAllLoginTableData()
+        {
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            ExecuteProcedure executeProcedure = new ExecuteProcedure(configuration);
+            DataTable dataTable = await executeProcedure.GetAllLoginTableData();
+            // Convert DataTable to JSON or any other format as needed
+            return Json(dataTable);
         }
     }
 }
