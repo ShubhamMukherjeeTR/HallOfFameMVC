@@ -1,0 +1,87 @@
+﻿@model HallOfFameMVC.ViewModels.UserDetailsViewModel
+
+@{
+    ViewBag.Title = "Submission";
+}
+
+<div class="mb-3"></div>
+
+<h2>Welcome to Submission Page</h2>
+
+<div class="mb-3"></div>
+
+@if (Model != null)
+{
+    <h3>Current Manager Account Details</h3>
+
+    <table class="table table-warning">
+        <thead>
+            <tr>
+                <th>Account Detail Attributes</th>
+                <th>Account Values</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>UserName</td>
+                <td>@Model.UserName</td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>@Model.Password</td>
+            </tr>
+            <tr>
+                <td>SubmissionRights</td>
+                <td>@Model.SubmissionRights</td>
+            </tr>
+            <tr>
+                <td>ReviewRights</td>
+                <td>@Model.ReviewRights</td>
+            </tr>
+            <tr>
+                <td>AdminRights</td>
+                <td>@Model.AdminRights</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form method="post" action="@Url.Action("LoadSubmissionPage", "Submission")">
+        <div class="mb-3">
+            <h3>Fill in mandatory category details</h3>
+        </div>
+        <div class="mb-3">
+            <label for="SelectedCategory" class="form-label">Select Category:</label>
+            <select class="form-control" id="SelectedCategory" name="SelectedCategory">
+                <option value="Category1">Category 1</option>
+                <option value="Category2">Category 2</option>
+                <option value="Category3">Category 3</option>
+                <!-- Add more options as needed -->
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <h3>Fill in the Employee Details</h3>
+        </div>
+        <div class="mb-3">
+            <label for="EmployeeID" class="form-label">Enter Employee ID :</label>
+            <input type="text" class="form-control" id="EmployeeID" name="EmployeeID" />
+        </div>
+        <div class="mb-3">
+            <label for="EmployeeName" class="form-label">Enter Employee Name :</label>
+            <input type="text" id="EmployeeName" class="form-control" name="EmployeeName" />
+        </div>
+        <div class="mb-3">
+            <label for="EmployeeDesignation" class="form-label">Enter Employee Designation :</label>
+            <input type="text" id="EmployeeDesignation" class="form-control" name="EmployeeDesignation" />
+        </div>
+        <div class="mb-3">
+            <label for="EmployeeTeam" class="form-label">Enter Employee Team :</label>
+            <input type="text" id="EmployeeTeam" class="form-control" name="EmployeeTeam" />
+        </div>
+        <button type="submit" class="btn btn-warning">Submit</button>
+    </form>
+}
+else
+{
+    <div class="alert alert-danger">No user details found</div>
+}

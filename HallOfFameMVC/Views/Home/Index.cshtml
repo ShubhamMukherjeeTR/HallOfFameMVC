@@ -15,9 +15,9 @@
 <div class="mb-3"></div>
 @if (ViewData["userDetails"] != null)
 {
-    DataRow dataRow = ViewData["userDetails"] as DataRow;
+    DataRow userDetails = ViewData["userDetails"] as DataRow;
 
-    <h2>Account Details</h2>
+    <h2>Current Manager Account Details</h2>
 
     <table class="table table-warning">
         <thead>
@@ -27,11 +27,11 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (DataColumn column in dataRow.Table.Columns)
+            @foreach (DataColumn column in userDetails.Table.Columns)
             {
                 <tr>
                     <td>@column.ColumnName</td>
-                    <td>@dataRow[column]</td>
+                    <td>@userDetails[column]</td>
                 </tr>
             }
         </tbody>
@@ -46,13 +46,22 @@
         <div class="card-body">
             <h5 class="card-title">Submission</h5>
             <p class="card-text">To submit achievements, please fill out the form on the submission page.</p>
-            @if (dataRow.Field<bool>("SubmissionRights") == true)
+            @if (userDetails.Field<bool>("SubmissionRights") == true)
             {
-                <a href="#" class="btn btn-warning">Create Submission</a>
+                    <form method="post" action="@Url.Action("LoadSubmissionPage", "Submission")">
+                        <input type="hidden" name="LoginNo" value="@userDetails["LoginNo"]" />
+                        <input type="hidden" name="LoginName" value="@userDetails["LoginName"]" />
+                        <input type="hidden" name="UserName" value="@userDetails["UserName"]" />
+                        <input type="hidden" name="Password" value="@userDetails["Password"]" />
+                        <input type="hidden" name="SubmissionRights" value="@userDetails["SubmissionRights"]" />
+                        <input type="hidden" name="ReviewRights" value="@userDetails["ReviewRights"]" />
+                        <input type="hidden" name="AdminRights" value="@userDetails["AdminRights"]" />
+                        <button type="submit" class="btn btn-warning">Create Submission</button>
+                    </form>
             }
             else
             {
-                    <p class="alert alert-danger">You don't have rights for Submission.</p>
+                <p class="alert alert-danger">You don't have rights for Submission.</p>
             }
         </div>
     </div>
@@ -61,7 +70,7 @@
         <div class="card-body">
             <h5 class="card-title">Review Submissions</h5>
             <p class="card-text">All submitted records will be displayed on the review page. Check back often to see the latest achievements!</p>
-                @if (dataRow.Field<bool>("ReviewRights") == true)
+                @if (userDetails.Field<bool>("ReviewRights") == true)
                 {
                     <a href="#" class="btn btn-warning">Review Submissions</a>
                 }
@@ -76,7 +85,7 @@
         <div class="card-body">
             <h5 class="card-title">Admin Panel</h5>
             <p class="card-text">Admins can manage submissions and oversee the review process.</p>
-                @if (dataRow.Field<bool>("AdminRights") == true)
+                @if (userDetails.Field<bool>("AdminRights") == true)
                 {
                     <a href="#" class="btn btn-warning">Admin Panel</a>
                 }
