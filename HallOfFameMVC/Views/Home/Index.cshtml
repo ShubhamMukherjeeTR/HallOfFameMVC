@@ -72,7 +72,7 @@
             <p class="card-text">All submitted records will be displayed on the review page. Check back often to see the latest achievements!</p>
                 @if (userDetails.Field<bool>("ReviewRights") == true)
                 {
-                    <a href="#" class="btn btn-warning">Review Submissions</a>
+                    <a href="@Url.Action("ReviewSubmissionPage", "ReviewSubmission")" class="btn btn-warning">Review Submissions</a>
                 }
                 else
                 {
