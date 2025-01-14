@@ -1,0 +1,58 @@
+﻿@model IEnumerable<HallOfFameMVC.Models.TeamSubmissionViewModel>
+
+@{
+    ViewData["Title"] = "Team Submissions";
+}
+
+<!-- Include DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
+
+<h1>Team Submissions</h1>
+
+<table id="teamSubmissionsTable" class="table table-warning">
+    <thead>
+        <tr>
+            <th>Team ID</th>
+            <th>Team Name</th>
+            <th>Location</th>
+            <th>Nominating Manager</th>
+            <th>Leadership Member</th>
+            <th>OKR</th>
+            <th>Rating</th>
+            <th>Comment</th>
+            <th>Review</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var submission in Model)
+        {
+            <tr>
+                <td>@submission.TeamID</td>
+                <td>@submission.TeamName</td>
+                <td>@submission.Location</td>
+                <td>@submission.NominatingManagerName</td>
+                <td>@submission.LeadershipMember</td>
+                <td>@submission.OKR</td>
+                <td>@submission.ReviewScore</td>
+                <td>@submission.ReviewComment</td>
+                <td>
+                    <a asp-controller="TeamSubmission" asp-action="Review" asp-route-id="@submission.TeamID">Review</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Include jQuery and DataTables JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#teamSubmissionsTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true
+        });
+    });
+</script>

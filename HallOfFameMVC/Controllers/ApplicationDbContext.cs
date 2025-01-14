@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
            }
 
            public DbSet<EmployeeSubmissionViewModel> EmployeeSubmissions { get; set; }
-       }
+           public DbSet<TeamSubmissionViewModel> TeamSubmissions { get; set; }
+        }
    }
    

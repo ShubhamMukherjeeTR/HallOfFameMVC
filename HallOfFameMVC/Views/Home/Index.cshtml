@@ -72,7 +72,8 @@
             <p class="card-text">All submitted records will be displayed on the review page. Check back often to see the latest achievements!</p>
                 @if (userDetails.Field<bool>("ReviewRights") == true)
                 {
-                    <a href="@Url.Action("ReviewSubmissionPage", "ReviewSubmission")" class="btn btn-warning">Review Submissions</a>
+                    <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("ReviewSubmissionPage", "ReviewSubmission")'">Individual</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='@Url.Action("TeamReviewPage", "TeamSubmission")'">Team</button>
                 }
                 else
                 {
@@ -101,3 +102,5 @@ else
 {
     <div class="alert alert-danger">No user details found</div>
 }
+
+
