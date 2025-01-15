@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using Dapper;
 using FastMember;
+using HallOfFameMVC.ViewModels;
 using Microsoft.Extensions.Configuration;
 
 namespace HallOfFameMVC.Data
@@ -74,6 +75,67 @@ namespace HallOfFameMVC.Data
                         adapter.Fill(result);
                         return result;
                     }
+                }
+            }
+        }
+
+
+        public async Task<bool> InsertIndividualSubmission(UserDetailsViewModel model, string NominationType, string Location, string TimePeriod, string Period, string OKR2025, string LeadershipMember, string EmployeeID, string EmployeeName, string EmployeeDesignation, string EmployeeTeam)
+        {
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                await connection.OpenAsync();
+                using (var command = new SqlCommand("Proc_InsertIndividualSubmission", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+                    command.Parameters.AddWithValue("@EmployeeName", EmployeeName);
+                    command.Parameters.AddWithValue("@EmployeeDesignation", EmployeeDesignation);
+                    command.Parameters.AddWithValue("@EmployeeTeamName", EmployeeTeam);
+
+                    command.Parameters.AddWithValue("@NominatingManagerEmployeeID", model.LoginNo);
+                    command.Parameters.AddWithValue("@NominatingManagerName", model.LoginName);
+                    command.Parameters.AddWithValue("@NominatingManagerUserName", model.UserName);
+                    command.Parameters.AddWithValue("@NominatingManagerTeamName", model.TeamName);
+
+                    command.Parameters.AddWithValue("@Location", Location);
+                    command.Parameters.AddWithValue("@TimePeriod", TimePeriod);
+                    command.Parameters.AddWithValue("@Period", Period);
+                    command.Parameters.AddWithValue("@OKR", OKR2025);
+                    command.Parameters.AddWithValue("@LeadershipMember", LeadershipMember);
+
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
+        public async Task<bool> InsertTeamSubmission(UserDetailsViewModel model, string NominationType, string Location, string TimePeriod, string Period, string OKR2025, string LeadershipMember, string TeamID,string SubmissionTeamName)
+        {
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                await connection.OpenAsync();
+                using (var command = new SqlCommand("Proc_InsertTeamSubmission", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@TeamID", TeamID);
+                    command.Parameters.AddWithValue("@TeamName", SubmissionTeamName);
+
+                    command.Parameters.AddWithValue("@NominatingManagerEmployeeID", model.LoginNo);
+                    command.Parameters.AddWithValue("@NominatingManagerName", model.LoginName);
+                    command.Parameters.AddWithValue("@NominatingManagerUserName", model.UserName);
+                    command.Parameters.AddWithValue("@NominatingManagerTeamName", model.TeamName);
+
+                    command.Parameters.AddWithValue("@Location", Location);
+                    command.Parameters.AddWithValue("@TimePeriod", TimePeriod);
+                    command.Parameters.AddWithValue("@Period", Period);
+                    command.Parameters.AddWithValue("@OKR", OKR2025);
+                    command.Parameters.AddWithValue("@LeadershipMember", LeadershipMember);
+
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+                    return rowsAffected > 0;
                 }
             }
         }

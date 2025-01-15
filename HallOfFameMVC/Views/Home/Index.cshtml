@@ -46,20 +46,23 @@
         <div class="card-body">
             <h5 class="card-title">Submission</h5>
             <p class="card-text">To submit achievements, please fill out the form on the submission page.</p>
-            @if (userDetails.Field<bool>("SubmissionRights") == true)
-            {
+                @* @if (userDetails.Field<bool>("SubmissionRights") == true)
+ *@
+                @if (userDetails["SubmissionRights"].ToString().ToLower() == "true")
+                {
                     <form method="post" action="@Url.Action("LoadSubmissionPage", "Submission")">
                         <input type="hidden" name="LoginNo" value="@userDetails["LoginNo"]" />
                         <input type="hidden" name="LoginName" value="@userDetails["LoginName"]" />
                         <input type="hidden" name="UserName" value="@userDetails["UserName"]" />
                         <input type="hidden" name="Password" value="@userDetails["Password"]" />
+                        <input type="hidden" name="TeamName" value="@userDetails["TeamName"]" />
                         <input type="hidden" name="SubmissionRights" value="@userDetails["SubmissionRights"]" />
                         <input type="hidden" name="ReviewRights" value="@userDetails["ReviewRights"]" />
                         <input type="hidden" name="AdminRights" value="@userDetails["AdminRights"]" />
                         <button type="submit" class="btn btn-warning">Create Submission</button>
                     </form>
-            }
-            else
+                }
+                else
             {
                 <p class="alert alert-danger">You don't have rights for Submission.</p>
             }

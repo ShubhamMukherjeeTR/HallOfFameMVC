@@ -23,12 +23,24 @@
         </thead>
         <tbody>
             <tr>
+                <td>Manager Employee ID</td>
+                <td>@Model.LoginNo</td>
+            </tr>
+            <tr>
+                <td>Manager Name</td>
+                <td>@Model.LoginName</td>
+            </tr>
+            <tr>
                 <td>UserName</td>
                 <td>@Model.UserName</td>
             </tr>
             <tr>
                 <td>Password</td>
                 <td>@Model.Password</td>
+            </tr>
+            <tr>
+                <td>Team Name</td>
+                <td>@Model.TeamName</td>
             </tr>
             <tr>
                 <td>SubmissionRights</td>
@@ -45,22 +57,83 @@
         </tbody>
     </table>
 
-    <form method="post" action="@Url.Action("LoadSubmissionPage", "Submission")">
+    <form method="post" action="@Url.Action("SubmitSubmissionValues", "Submission")">
+        @* Hidden fields to pass @Model values *@
+        <input type="hidden" name="LoginNo" value="@Model.LoginNo" />
+        <input type="hidden" name="LoginName" value="@Model.LoginName" />
+        <input type="hidden" name="UserName" value="@Model.UserName" />
+        <input type="hidden" name="Password" value="@Model.Password" />
+        <input type="hidden" name="TeamName" value="@Model.TeamName" />
+        <input type="hidden" name="SubmissionRights" value="@Model.SubmissionRights" />
+        <input type="hidden" name="ReviewRights" value="@Model.ReviewRights" />
+        <input type="hidden" name="AdminRights" value="@Model.AdminRights" />
+
         <div class="mb-3">
             <h3>Fill in mandatory category details</h3>
         </div>
         <div class="mb-3">
-            <label for="SelectedCategory" class="form-label">Select Category:</label>
-            <select class="form-control" id="SelectedCategory" name="SelectedCategory">
-                <option value="Category1">Category 1</option>
-                <option value="Category2">Category 2</option>
-                <option value="Category3">Category 3</option>
-                <!-- Add more options as needed -->
+            <label for="NominationType" class="form-label">Nomination Type :</label>
+            <select class="form-control" id="NominationType" name="NominationType">
+                <option value="" selected disabled>Select Nomination Type</option>
+                <option value="Individual">Individual</option>
+                <option value="Team Award">Team Award</option>
             </select>
         </div>
 
         <div class="mb-3">
-            <h3>Fill in the Employee Details</h3>
+            <label for="Location" class="form-label">Location :</label>
+            <select class="form-control" id="Location" name="Location">
+                <option value="" selected disabled>Select Location</option>
+                <option value="Ahemdabad">Ahemdabad</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Mumbai">Mumbai</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="TimePeriod" class="form-label">Time Period :</label>
+            <select class="form-control" id="TimePeriod" name="TimePeriod">
+                <option value="" selected disabled>Select Time Period</option>
+                <option value="Quaterly">Quaterly</option>
+                <option value="Half Yearly">Half Yearly</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="Period" class="form-label">Period :</label>
+            <select class="form-control" id="Period" name="Period">
+                <option value="" selected disabled>Select Period</option>
+                <option value="Q1, 2025">Q1, 2025</option>
+                <option value="Q2, 2025">Q2, 2025</option>
+                <option value="Q3, 2025">Q3, 2025</option>
+                <option value="Q4, 2025">Q4, 2025</option>
+                <option value="H1, 2025">H1, 2025</option>
+                <option value="H2, 2025">H2, 2025</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="OKR2025" class="form-label">2025 OKR :</label>
+            <select class="form-control" id="OKR2025" name="OKR2025">
+                <option value="" selected disabled>Select 2025 OKR</option>
+                <option value="Trusted Customer">Trusted Customer</option>
+                <option value="Trusted Business">Trusted Business</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="LeadershipMember" class="form-label">Leadership Member :</label>
+            <select class="form-control" id="LeadershipMember" name="LeadershipMember">
+                <option value="" selected disabled>Select Leadership Member</option>
+                <option value="Sumit Rana">Sumit Rana</option>
+                <option value="Shubham Mukherjee">Shubham Mukherjee</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <h3>Fill in the Employee Details (If Nomination Type : Individual)</h3>
         </div>
         <div class="mb-3">
             <label for="EmployeeID" class="form-label">Enter Employee ID :</label>
@@ -78,7 +151,37 @@
             <label for="EmployeeTeam" class="form-label">Enter Employee Team :</label>
             <input type="text" id="EmployeeTeam" class="form-control" name="EmployeeTeam" />
         </div>
-        <button type="submit" class="btn btn-warning">Submit</button>
+
+        <div class="mb-3">
+            <h3>Fill in the Team Details (If Nomination Type : Team Award)</h3>
+        </div>
+        <div class="mb-3">
+            <label for="TeamID" class="form-label">Enter Team ID :</label>
+            <input type="text" class="form-control" id="TeamID" name="TeamID" />
+        </div>
+        <div class="mb-3">
+            <label for="SubmissionTeamName" class="form-label">Enter Team Name :</label>
+            <input type="text" id="SubmissionTeamName" class="form-control" name="SubmissionTeamName" />
+        </div>
+
+        <div class="mb-3">
+            <h3>Upload File and Photo (still under devlopment)</h3>
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+        </div>
+
+        <div class="mb-3">
+         <button type="submit" class="btn btn-warning">Submit</button>
+        </div>
+
+        <div class="mb-3">
+            <h5>Note : Details will be filled up as per Nomination Type.</h5>
+            <h5>If Nomination Type is Team Awards, Only team data will be taken forward and Individual data will be discarded.</h5>
+            <h5>If Nomination Type is Individual, Only Individual data will be taken forward and team data will be discarded.</h5>
+        </div>
+
     </form>
 }
 else
